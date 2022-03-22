@@ -16,7 +16,7 @@ Create a workflow (eg: `.github/workflows/finder.yml` see Creating a Workflow fi
 
 - name: Make Branch 
   id: branch-maker
-  uses: jsryudev/branch-maker@v0.1.0
+  uses: jsryudev/branch-maker@v0.2.0
   with:
     repo-token: ${{ secrets.GITHUB_TOKEN }}
     ref-name: release
