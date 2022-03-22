@@ -2,7 +2,7 @@
 Branch Maker
 
 ## Create Workflow
-Create a workflow (eg: `.github/workflows/finder.yml` see Creating a Workflow file) to utilize the labeler action with content:
+Create a workflow (eg: `.github/workflows/finder.yml` see Creating a Workflow file) to utilize the branch-maker action with content:
 
 ```yml
 - name: Checkout
