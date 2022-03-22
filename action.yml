@@ -1,4 +1,4 @@
-name: 'Branch Maker'
+name: 'Branch Maker Through SHA'
 description: 'Branch Maker'
 author: 'jsryudev'
 inputs:
@@ -10,7 +10,6 @@ inputs:
   ref-sha:
     description: 'The reference SHA of the branch to be maked'
     required: true
-  
   
 runs:
   using: 'node16'
