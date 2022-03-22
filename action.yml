@@ -1,0 +1,21 @@
+name: 'Branch Maker'
+description: 'Branch Maker'
+author: 'jsryudev'
+inputs:
+  repo-token:
+    description: 'The GITHUB_TOKEN secret'
+  ref-name:
+    description: 'The name of the branch to be maked'
+    required: true
+  ref-sha:
+    description: 'The reference SHA of the branch to be maked'
+    required: true
+  
+  
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'git-branch'
+  color: 'gray-dark'
