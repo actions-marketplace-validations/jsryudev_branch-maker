@@ -55,13 +55,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __asyncValues = (this && this.__asyncValues) || function (o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
@@ -74,10 +67,6 @@ function run() {
             const refSHA = core.getInput(constants_1.Inputs.RefSHA, { required: true });
             const refName = core.getInput(constants_1.Inputs.RefName, { required: true });
             const client = github.getOctokit(token);
-            const refs = yield getRefs(client, refName);
-            if (refs.length) {
-                core.setFailed(`aleady exist ref name: ${refName}`);
-            }
             const ref = yield createRef(client, refName, refSHA);
             core.setOutput(constants_1.Outputs.RefName, ref.ref.replace('refs/heads/', ''));
         }
@@ -88,35 +77,6 @@ function run() {
     });
 }
 exports.run = run;
-function getRefs(client, match) {
-    var e_1, _a;
-    return __awaiter(this, void 0, void 0, function* () {
-        const iterator = client.paginate.iterator(client.rest.git.listMatchingRefs, {
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            ref: ''
-        });
-        const matchedRefs = [];
-        try {
-            for (var iterator_1 = __asyncValues(iterator), iterator_1_1; iterator_1_1 = yield iterator_1.next(), !iterator_1_1.done;) {
-                const { data: refs } = iterator_1_1.value;
-                const target = refs
-                    .map(ref => ref.ref)
-                    .filter(ref => ref === `refs/heads/${match}`)
-                    .map(ref => ref.replace('refs/heads/', ''));
-                matchedRefs.push(...target);
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return)) yield _a.call(iterator_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        return matchedRefs;
-    });
-}
 function createRef(client, refName, refSHA) {
     return __awaiter(this, void 0, void 0, function* () {
         const { data: ref } = yield client.rest.git.createRef({
